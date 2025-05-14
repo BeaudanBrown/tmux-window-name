@@ -23,6 +23,9 @@ OPTIONS_PREFIX = '@tmux_window_name_'
 HOOK_INDEX = 8921
 HOME_DIR = os.path.expanduser('~')
 USR_BIN_REMOVER = (r'^(/usr)?/bin/(.+)', r'\g<2>')
+CUR_SYSTEM_REMOVER = (r'^/run/current-system/sw/bin/(.+)', r'\g<1>')
+PROFILE_REMOVER = (r'^/home/[a-zA-Z]*/.nix-profile/bin/(.+)', r'\g<1>')
+NIX_STORE_REMOVER = (r'^/nix/store/[^/]+/.nix-profile/bin/(.+)', r'\g<1>')
 
 DEFAULT_PROGRAM_ICONS = {
     'nvim': '',  # nf-dev-vim
@@ -179,6 +182,9 @@ class Options:
         default_factory=lambda: [
             (r'.+ipython([32])', r'ipython\g<1>'),
             USR_BIN_REMOVER,
+            CUR_SYSTEM_REMOVER,
+            PROFILE_REMOVER,
+            NIX_STORE_REMOVER,
             (r'(bash) (.+)/(.+[ $])(.+)', r'\g<3>\g<4>'),
             (r'.+poetry shell', 'poetry'),
         ]
